@@ -13,6 +13,8 @@ const Navbar = () => {
             {user && (
                 <>
                     <span>Bienvenido, {user.nombre} {user.apellidos}</span>
+                    <Link to='/secretaria/inicio'>inicio</Link>
+                    <Link to='/secretaria/bicicletas'>Bicicletas</Link>
                     <button onClick={logout} style={{ marginLeft: '10px' }}>
                         Cerrar sesion
                     </button>
