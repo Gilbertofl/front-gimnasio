@@ -1,25 +1,26 @@
+import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
-const PrivateRoute =({ children, allowedRole}) => {
-    const { user, loading } = useAuth();
-    const token = localStorage.getItem('sessionToken');
+const PrivateRoute = ({ children, allowedRole, allowedRoles }) => {
+  const { user, loading } = useAuth();
+  const token = localStorage.getItem('sessionToken');
 
-    if(loading){
-        return <div>Cargando...</div>;
-    }
+  if (loading) {
+    return <div>Cargando sesión...</div>;
+  }
 
-    if(!user || !token){
-        console.log('Usuario o token no encontrado');
-        return <Navigate to='/login' />
-    }
+  if (!user || !token) {
+    return <Navigate to="/login" replace />;
+  }
 
-    if(user.tipo_usuario !== allowedRole){
-        console.log('usuario no autorizado para esta ruta');
-        return <Navigate to='/' />
-    }
+  const rolesPermitidos = allowedRoles || (allowedRole ? [allowedRole] : []);
 
-    return children;
+  if (rolesPermitidos.length > 0 && !rolesPermitidos.includes(user.tipo_usuario)) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
 
 export default PrivateRoute;

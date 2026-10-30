@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# CycleFlow - Plataforma de Gestión para Estudio de Spinning
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CycleFlow es una aplicación web moderna diseñada para la administración integral de un estudio de **Indoor Cycling (Spinning)**. Permite a los alumnos apartar sus clases y bicicletas en tiempo real, mientras que la secretaría o administración gestiona horarios, inventario de bicicletas, usuarios y vigencia de membresías.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🎯 ¿Qué hace el sistema?
 
-### `npm start`
+La aplicación se divide en dos portales principales según el tipo de usuario:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 1. Portal del Alumno (Cliente)
+- **Carnet de Membresía Digital:** Muestra de forma clara si la membresía está activa y su fecha límite de vigencia.
+- **Reserva de Clases:**
+  - Elige el horario del turno en el que desea entrenar.
+  - El sistema muestra únicamente las bicicletas que están libres en ese turno exacto.
+  - Permite ingresar la talla de calzado para la bicicleta.
+- **Gestión de Reservas:** Consulta sus clases activas con opción de modificarlas o cancelarlas si no puede asistir, además de ver su historial de clases concluidas.
+- **Mi Perfil:** Consulta y actualización de datos personales (nombre, teléfono, correo o contraseña).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. Portal de Administración (Secretaría / Administrador)
+- **Control de Reservaciones:** Vista en vivo de todos los alumnos inscritos por horario. Permite concluir clases al terminar el turno (lo que libera la bicicleta automáticamente para el historial).
+- **Catálogo de Bicicletas:** Alta de nuevas unidades, cambio de estado (libre, ocupada, en mantenimiento) y filtro para consultar disponibilidad en turnos específicos.
+- **Horarios de Clases:** Programación y modificación de turnos diarios (ejemplo: 07:00, 08:00, 18:00 hrs).
+- **Control de Membresías:** Activación y renovación de membresías asignadas a clientes por meses de duración, con detección automática de membresías vencidas.
+- **Directorio de Usuarios:** Registro y edición de clientes y personal administrativo.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Tecnologías Utilizadas
 
-### `npm run build`
+- **React 18:** Construcción de la interfaz de usuario con componentes funcionales y Hooks.
+- **React Router Dom (v6):** Manejo de rutas públicas y privadas protegidas por rol (`cliente` y `secretaria`).
+- **Context API:** Manejo global de la sesión del usuario (`AuthContext`).
+- **Diseño Personalizado:** Tema oscuro elegante con iconos vectoriales SVG limpios y maquetación centrada para cualquier tamaño de pantalla.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📂 Estructura del Proyecto
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```text
+src/
+├── api/             # Conexión con los servicios del backend
+│   ├── auth.js          # Inicio de sesión, registro y cierre
+│   ├── bicicletas.js    # Control de bicicletas y disponibilidad
+│   ├── config.js        # Configuración base de la API y manejo de errores
+│   ├── horarios.js      # Turnos de clases
+│   ├── membresias.js    # Control de suscripciones y vigencias
+│   ├── reservaciones.js # Reservas de clases e historial
+│   └── usuarios.js      # Directorio y perfiles
+├── components/      # Componentes reutilizables
+│   ├── Icons.js         # Colección de iconos vectoriales limpios
+│   └── Navbar.js        # Barra de navegación adaptada por rol
+├── context/         # Estado global y seguridad de rutas
+│   ├── AuthContext.js   # Manejo de sesión y usuario activo
+│   └── PrivateRoute.js  # Protección de rutas según el rol
+└── pages/           # Vistas de la aplicación
+    ├── LoginPage.js     # Inicio de sesión
+    ├── RegisterPage.js  # Registro de nuevos usuarios
+    ├── clientes/        # Vistas exclusivas para alumnos
+    │   ├── ReservacionesClientePage.js
+    │   └── WelcomePage.js
+    └── secretaria/      # Vistas administrativas
+        ├── BicicletasPage.js
+        ├── HorariosPage.js
+        ├── MembresiasPage.js
+        ├── ReservacionesPage.js
+        ├── UsuariosPage.js
+        └── WelcomePage.js
+```
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ⚙️ Pasos para Ejecutar el Proyecto
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Requisitos previos
+- Node.js (versión 18 o superior recomendada)
+- Backend de la aplicación ejecutándose en `http://localhost:5124`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Instalación y arranque
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. **Iniciar la aplicación en modo desarrollo:**
+   ```bash
+   npm start
+   ```
+   La aplicación se abrirá automáticamente en tu navegador en `http://localhost:3000`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Generar versión de producción (opcional):**
+   ```bash
+   npm run build
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🔑 Cuentas de Prueba
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Para probar el flujo completo con datos ya cargados:
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Rol | Correo Electrónico | Contraseña |
+| :--- | :--- | :--- |
+| **Secretaría (Admin)** | `secretaria@gimnasio.com` | `Secretaria123!` |
+| **Alumno (Cliente)** | `cliente@gimnasio.com` | `Cliente123!` |
